@@ -1,0 +1,28 @@
+.list-items-form__input {
+  margin: 0;
+  width: 100%;
+  padding-bottom: 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  outline: none;
+}
+.list-items-form__button {
+  padding-top: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  position: absolute;
+  right: 16px;
+  width: 12px;
+  height: 10px;
+  background-color: #fff;
+  background: url(../../../img/accept-btn-black.svg) center no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+.list-items-form__button_active {
+  opacity: 0.2;
+}
