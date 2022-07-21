@@ -3,16 +3,28 @@ import './ListItems.scss'
 
 export const ListItems = ({
   idx,
-  completed,
+  isListItemCompleted,
   listItemInputText,
-  toggleStateById,
+  listItems,
+  setListItems,
 }) => {
+  const toggleListItemStateById = (idx) => {
+    setListItems(
+      listItems.map((listItem) => {
+        if (idx !== listItem.idx) return listItem
+        return {
+          ...listItem,
+          isListItemCompleted: !listItem.isListItemCompleted,
+        }
+      })
+    )
+  }
   return (
     <>
-      <div className='list-item' key={idx}>
+      <div className='list-item'>
         <label
           className={`list-item__label${
-            completed ? ' list-item__disabled' : ''
+            isListItemCompleted ? ' list-item__disabled' : ''
           }`}
           htmlFor={`check${idx}`}
         >
@@ -20,8 +32,8 @@ export const ListItems = ({
             className='checkbox'
             type='checkbox'
             id={`check${idx}`}
-            onChange={() => toggleStateById(idx)}
-            defaultChecked={completed}
+            onChange={() => toggleListItemStateById(idx)}
+            defaultChecked={isListItemCompleted}
           />
           <span className='checkbox-styled'></span>
           {listItemInputText}

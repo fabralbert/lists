@@ -4,48 +4,14 @@ import { ListItemsForm } from './ListItemsForm/ListItemsForm'
 import { ListItems } from './ListItems/ListItems'
 import './Lists.scss'
 
-export const Lists = ({ listTitle, idx }) => {
+export const Lists = ({ listTitle, idx, isListOpened }) => {
   const [listItems, setListItems] = useState([])
   const [listItemInputText, setlistItemInputText] = useState('')
-  const [toggleList, setToggleList] = useState(false)
   const [toggleInputToAddListItems, setToggleInputToAddListItems] =
     useState(false)
 
   const handleInput = () => {
     setToggleInputToAddListItems(!toggleInputToAddListItems)
-  }
-
-  const addListItem = () => {
-    setListItems([
-      {
-        listItemInputText,
-        idx: new Date(),
-        completed: false,
-      },
-      ...listItems,
-    ])
-  }
-
-  const handleSubmitListItem = (e) => {
-    e.preventDefault()
-    addListItem()
-    setlistItemInputText('')
-  }
-
-  const addedById = (idx, listItem) => {
-    if (idx !== listItem.idx) return listItem
-    return {
-      ...listItem,
-      completed: !listItem.completed,
-    }
-  }
-
-  const toggleStateById = (idx) => {
-    setListItems(listItems.map((listItem) => addedById(idx, listItem)))
-  }
-
-  const openListItems = () => {
-    setToggleList(!toggleList)
   }
 
   return (
@@ -54,11 +20,11 @@ export const Lists = ({ listTitle, idx }) => {
         <ListTitle
           listTitle={listTitle}
           idx={idx}
-          toggleList={toggleList}
+          toggleList={isListOpened}
           listItems={listItems}
-          openListItems={openListItems}
+          setListItems={setListItems}
         />
-        {toggleList && (
+        {isListOpened && (
           <div className='lists__inner'>
             <input
               className='list__button'
@@ -72,17 +38,18 @@ export const Lists = ({ listTitle, idx }) => {
                 <ListItemsForm
                   listItemInputText={listItemInputText}
                   setlistItemInputText={setlistItemInputText}
-                  handleSubmitListItem={handleSubmitListItem}
-                  toggleStateById={toggleStateById}
+                  listItems={listItems}
+                  setListItems={setListItems}
                 />
               )}
               {listItems.map((item) => (
                 <ListItems
                   key={item.idx}
                   idx={item.idx}
-                  completed={item.completed}
+                  isListItemCompleted={item.isListItemCompleted}
                   listItemInputText={item.listItemInputText}
-                  toggleStateById={toggleStateById}
+                  listItems={listItems}
+                  setListItems={setListItems}
                 />
               ))}
             </div>

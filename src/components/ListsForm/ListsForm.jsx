@@ -1,48 +1,49 @@
 import './ListsForm.scss'
+import { v4 as uuid } from 'uuid'
+import { useContext } from 'react'
+import { Context } from '../../context'
 
-export const ListsForm = ({ listTitle, setListTitle, lists, setLists }) => {
-  const addTodoList = (listTitle) => {
+export const ListsForm = () => {
+  const { lists, setLists, listTitle, setListTitle } = useContext(Context)
+
+  const addList = (listTitle) => {
     setLists([
-      ...lists,
       {
         listTitle,
-        idx: new Date(),
+        idx: uuid(),
+        isListOpened: false,
       },
+      ...lists,
     ])
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    addTodoList(listTitle)
+    addList(listTitle)
     setListTitle('')
-  }
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSubmit(e)
-    }
   }
 
   return (
     <form className='lists-form'>
       <div className='lists-form__item'>
-        <input
-          className='lists-form__input'
-          type='text'
-          value={listTitle}
-          onChange={(e) => setListTitle(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder='New list'
-        />
-        <button
-          className={`lists-form__button${
-            listTitle ? ' lists-form__button_active' : ''
-          }`}
-          onClick={handleSubmit}
-          disabled={!listTitle}
-        >
-          + Add
-        </button>
+        <div className='list-form__inner'>
+          <input
+            className='lists-form__input'
+            type='text'
+            value={listTitle}
+            onChange={(e) => setListTitle(e.target.value)}
+            placeholder='New list'
+          />
+          <button
+            className={`lists-form__button${
+              listTitle ? ' lists-form__button_active' : ''
+            }`}
+            onClick={handleSubmit}
+            disabled={!listTitle}
+          >
+            + Add
+          </button>
+        </div>
       </div>
     </form>
   )

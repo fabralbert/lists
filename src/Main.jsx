@@ -2,26 +2,36 @@ import './Main.scss'
 import { useState } from 'react'
 import { Lists } from './components/Lists'
 import { ListsForm } from './components/ListsForm'
+import { Context } from './context'
 
 function Main() {
   const [lists, setLists] = useState([])
   const [listTitle, setListTitle] = useState('')
 
   return (
-    <div className='main'>
-      <div className='container'>
-        <h1 className='title'>My lists</h1>
-        <ListsForm
-          listTitle={listTitle}
-          setListTitle={setListTitle}
-          lists={lists}
-          setLists={setLists}
-        />
-        {lists.map((item) => (
-          <Lists listTitle={item.listTitle} idx={item.idx} />
-        ))}
+    <Context.Provider
+      value={{
+        lists,
+        setLists,
+        listTitle,
+        setListTitle,
+      }}
+    >
+      <div className='main'>
+        <div className='container'>
+          <h1 className='title'>My lists</h1>
+          <ListsForm />
+          {lists.map((item) => (
+            <Lists
+              key={item.idx}
+              listTitle={item.listTitle}
+              idx={item.idx}
+              isListOpened={item.isListOpened}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </Context.Provider>
   )
 }
 
