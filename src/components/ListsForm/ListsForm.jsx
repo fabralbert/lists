@@ -1,7 +1,8 @@
-import './ListsForm.scss'
-import { v4 as uuid } from 'uuid'
 import { useContext } from 'react'
+import { v4 as uuid } from 'uuid'
+
 import { Context } from '../../context'
+import './ListsForm.scss'
 
 export const ListsForm = () => {
   const { lists, setLists, listTitle, setListTitle } = useContext(Context)
@@ -12,6 +13,7 @@ export const ListsForm = () => {
         listTitle,
         idx: uuid(),
         isListOpened: false,
+        listItems: [],
       },
       ...lists,
     ])

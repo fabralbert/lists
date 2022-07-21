@@ -4,18 +4,29 @@ import './Modal.scss'
 export const Modal = ({
   idx,
   listItems,
-  setListItems,
   setIsModalOpened,
   listTitle,
   isDontAskCheckbox,
   setIsDontAskCheckbox,
+  lists,
+  setLists,
 }) => {
   const clearCompletedListItems = () => {
     if (isDontAskCheckbox) {
       localStorage.setItem('dontAsk', 1)
     }
-    setListItems(
-      [...listItems].filter((listItem) => !listItem.isListItemCompleted)
+    const listItemsFiltered = listItems.filter(
+      (listItem) => !listItem.isListItemCompleted
+    )
+
+    setLists(
+      lists.map((list) => {
+        if (idx !== list.idx) return list
+        return {
+          ...list,
+          listItems: [...listItemsFiltered],
+        }
+      })
     )
     setIsModalOpened(false)
   }

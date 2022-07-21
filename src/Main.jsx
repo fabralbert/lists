@@ -1,8 +1,9 @@
-import './Main.scss'
 import { useState } from 'react'
+
 import { Lists } from './components/Lists'
 import { ListsForm } from './components/ListsForm'
 import { Context } from './context'
+import './Main.scss'
 
 function Main() {
   const [lists, setLists] = useState([])
@@ -27,6 +28,7 @@ function Main() {
               listTitle={item.listTitle}
               idx={item.idx}
               isListOpened={item.isListOpened}
+              listItems={item.listItems}
             />
           ))}
         </div>

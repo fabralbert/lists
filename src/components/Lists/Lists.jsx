@@ -1,19 +1,20 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+
 import { ListTitle } from './ListTitle'
 import { ListItemsForm } from './ListItemsForm/ListItemsForm'
 import { ListItems } from './ListItems/ListItems'
 import './Lists.scss'
 
-export const Lists = ({ listTitle, idx, isListOpened }) => {
-  const [listItems, setListItems] = useState([])
+export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
   const [listItemInputText, setlistItemInputText] = useState('')
+  const inputToAddListItemRef = useRef()
+
   const [toggleInputToAddListItems, setToggleInputToAddListItems] =
     useState(false)
 
-  const handleInput = () => {
+  const handleInput = (e) => {
     setToggleInputToAddListItems(!toggleInputToAddListItems)
   }
-
   return (
     <>
       <div className='lists'>
@@ -22,7 +23,6 @@ export const Lists = ({ listTitle, idx, isListOpened }) => {
           idx={idx}
           toggleList={isListOpened}
           listItems={listItems}
-          setListItems={setListItems}
         />
         {isListOpened && (
           <div className='lists__inner'>
@@ -32,24 +32,24 @@ export const Lists = ({ listTitle, idx, isListOpened }) => {
               value='+ List item'
               onClick={handleInput}
             />
-
             <div className='list-items'>
               {toggleInputToAddListItems && (
                 <ListItemsForm
                   listItemInputText={listItemInputText}
                   setlistItemInputText={setlistItemInputText}
+                  idx={idx}
                   listItems={listItems}
-                  setListItems={setListItems}
+                  inputToAddListItemRef={inputToAddListItemRef}
                 />
               )}
               {listItems.map((item) => (
                 <ListItems
                   key={item.idx}
-                  idx={item.idx}
+                  idxListItem={item.idx}
+                  idxList={idx}
                   isListItemCompleted={item.isListItemCompleted}
                   listItemInputText={item.listItemInputText}
                   listItems={listItems}
-                  setListItems={setListItems}
                 />
               ))}
             </div>

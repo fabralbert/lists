@@ -1,27 +1,45 @@
 import React from 'react'
-import './ListItemsForm.scss'
+import { useEffect, useContext } from 'react'
 import { v4 as uuid } from 'uuid'
+
+import { Context } from '../../../context'
+import './ListItemsForm.scss'
 
 export const ListItemsForm = ({
   listItemInputText,
   setlistItemInputText,
-  setListItems,
   listItems,
+  inputToAddListItemRef,
+  idx,
 }) => {
-  const addListItem = () => {
-    setListItems([
-      {
-        listItemInputText,
-        idx: uuid(),
-        isListItemCompleted: false,
-      },
-      ...listItems,
-    ])
+  useEffect(() => {
+    inputToAddListItemRef.current.select()
+  }, [])
+
+  const { lists, setLists } = useContext(Context)
+
+  const addListItem = (idx) => {
+    setLists(
+      lists.map((list) => {
+        if (idx !== list.idx) return list
+        return {
+          ...list,
+          listItems: [
+            {
+              listItemInputText,
+              idx: uuid(),
+              isListItemCompleted: false,
+            },
+            ...listItems,
+          ],
+        }
+      })
+    )
   }
 
-  const handleSubmitListItem = (e) => {
+  const handleSubmitListItem = (e, idx) => {
     e.preventDefault()
-    addListItem()
+    addListItem(idx)
     setlistItemInputText('')
   }
   return (
@@ -31,12 +49,13 @@ export const ListItemsForm = ({
         type='text'
         value={listItemInputText}
         onChange={(e) => setlistItemInputText(e.target.value)}
+        ref={inputToAddListItemRef}
       />
       <button
         className={`list-items-form__button${
           listItemInputText ? '' : ' list-items-form__button_active'
         }`}
-        onClick={handleSubmitListItem}
+        onClick={(e) => handleSubmitListItem(e, idx)}
         disabled={!listItemInputText}
       ></button>
     </form>

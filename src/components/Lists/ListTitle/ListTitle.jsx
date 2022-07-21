@@ -1,17 +1,11 @@
 import React from 'react'
-import './ListTitle.scss'
-import { useContext } from 'react'
-import { Context } from '../../../context'
-import { useState } from 'react'
-import { Modal } from '../../Modal'
+import { useContext, useState } from 'react'
 
-export const ListTitle = ({
-  idx,
-  toggleList,
-  listItems,
-  setListItems,
-  listTitle,
-}) => {
+import { Context } from '../../../context'
+import { Modal } from '../../Modal'
+import './ListTitle.scss'
+
+export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
   const { lists, setLists } = useContext(Context)
   const [isModalOpened, setIsModalOpened] = useState(false)
   const [isDontAskCheckbox, setIsDontAskCheckbox] = useState(false)
@@ -19,8 +13,18 @@ export const ListTitle = ({
   const openModal = () => {
     const modalStorage = localStorage.getItem('dontAsk')
     if (modalStorage) {
-      setListItems(
-        [...listItems].filter((listItem) => !listItem.isListItemCompleted)
+      const listItemsFiltered = listItems.filter(
+        (listItem) => !listItem.isListItemCompleted
+      )
+
+      setLists(
+        lists.map((list) => {
+          if (idx !== list.idx) return list
+          return {
+            ...list,
+            listItems: [...listItemsFiltered],
+          }
+        })
       )
       return
     }
@@ -68,9 +72,11 @@ export const ListTitle = ({
       </div>
       {isModalOpened && (
         <Modal
+          idx={idx}
           listTitle={listTitle}
           listItems={listItems}
-          setListItems={setListItems}
+          lists={lists}
+          setLists={setLists}
           setIsModalOpened={setIsModalOpened}
           setIsDontAskCheckbox={setIsDontAskCheckbox}
           isDontAskCheckbox={isDontAskCheckbox}

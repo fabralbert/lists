@@ -1,24 +1,38 @@
 import React from 'react'
+import { useContext } from 'react'
+
+import { Context } from '../../../context'
 import './ListItems.scss'
 
 export const ListItems = ({
-  idx,
   isListItemCompleted,
   listItemInputText,
   listItems,
-  setListItems,
+  idxListItem,
+  idxList,
 }) => {
-  const toggleListItemStateById = (idx) => {
-    setListItems(
-      listItems.map((listItem) => {
-        if (idx !== listItem.idx) return listItem
+  const { lists, setLists } = useContext(Context)
+
+  const toggleListItemStateById = (idxListItem) => {
+    const listsItemsNew = listItems.map((listItem) => {
+      if (idxListItem !== listItem.idx) return listItem
+      return {
+        ...listItem,
+        isListItemCompleted: !listItem.isListItemCompleted,
+      }
+    })
+
+    setLists(
+      lists.map((list) => {
+        if (idxList !== list.idx) return list
         return {
-          ...listItem,
-          isListItemCompleted: !listItem.isListItemCompleted,
+          ...list,
+          listItems: [...listsItemsNew],
         }
       })
     )
   }
+
   return (
     <>
       <div className='list-item'>
@@ -26,13 +40,13 @@ export const ListItems = ({
           className={`list-item__label${
             isListItemCompleted ? ' list-item__disabled' : ''
           }`}
-          htmlFor={`check${idx}`}
+          htmlFor={`check${idxListItem}`}
         >
           <input
             className='checkbox'
             type='checkbox'
-            id={`check${idx}`}
-            onChange={() => toggleListItemStateById(idx)}
+            id={`check${idxListItem}`}
+            onChange={() => toggleListItemStateById(idxListItem)}
             defaultChecked={isListItemCompleted}
           />
           <span className='checkbox-styled'></span>
