@@ -1,14 +1,22 @@
-import { useState, useReducer } from 'react'
+import { useState, useReducer, useEffect } from 'react'
 
 import { Lists } from './components/Lists'
 import { ListsForm } from './components/ListsForm'
 import { Context } from './context'
 import { listReducer } from './reducer'
+
 import './Main.scss'
 
 function Main() {
   const [listTitle, setListTitle] = useState('')
-  const [lists, dispatch] = useReducer(listReducer, [])
+  const [lists, dispatch] = useReducer(
+    listReducer,
+    JSON.parse(localStorage.getItem('dontAsk')) || []
+  )
+
+  useEffect(() => {
+    localStorage.setItem('dontAsk', JSON.stringify(lists))
+  }, [lists])
 
   return (
     <Context.Provider

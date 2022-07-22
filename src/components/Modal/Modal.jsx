@@ -1,4 +1,5 @@
 import React from 'react'
+import Cookies from 'universal-cookie'
 import './Modal.scss'
 
 export const Modal = ({
@@ -10,23 +11,17 @@ export const Modal = ({
   setIsDontAskCheckbox,
   dispatch,
 }) => {
+  const cookies = new Cookies()
+
   const clearCompletedListItems = () => {
     if (isDontAskCheckbox) {
-      localStorage.setItem('dontAsk', 1)
+      cookies.set('idtest', '1', { path: '/' })
     }
 
     dispatch({
       type: 'CLEAR_COMPLETED_LIST_ITEMS',
       payload: { idx, listItems },
     })
-    setIsModalOpened(false)
-  }
-
-  const declineModal = () => {
-    if (isDontAskCheckbox) {
-      localStorage.setItem('dontAsk', 1)
-    }
-
     setIsModalOpened(false)
   }
 
@@ -60,7 +55,7 @@ export const Modal = ({
           </label>
         </div>
         <div className='modal__footer'>
-          <button className='modal__footer-btn__decline' onClick={declineModal}>
+          <button className='modal__footer-btn__decline' onClick={closeModal}>
             NO
           </button>
           <button

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useContext, useState } from 'react'
+import Cookies from 'universal-cookie'
 
 import { Context } from '../../../context'
 import { Modal } from '../../Modal'
@@ -10,9 +11,11 @@ export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
   const [isModalOpened, setIsModalOpened] = useState(false)
   const [isDontAskCheckbox, setIsDontAskCheckbox] = useState(false)
 
+  const cookies = new Cookies()
+
   const openModal = () => {
-    const modalStorage = localStorage.getItem('dontAsk')
-    if (modalStorage) {
+    const modalCookie = cookies.get('idtest')
+    if (modalCookie) {
       dispatch({
         type: 'CLEAR_COMPLETED_LIST_ITEMS',
         payload: { idx, listItems },
