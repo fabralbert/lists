@@ -6,41 +6,27 @@ import { Modal } from '../../Modal'
 import './ListTitle.scss'
 
 export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
-  const { lists, setLists } = useContext(Context)
+  const { dispatch } = useContext(Context)
   const [isModalOpened, setIsModalOpened] = useState(false)
   const [isDontAskCheckbox, setIsDontAskCheckbox] = useState(false)
 
   const openModal = () => {
     const modalStorage = localStorage.getItem('dontAsk')
     if (modalStorage) {
-      const listItemsFiltered = listItems.filter(
-        (listItem) => !listItem.isListItemCompleted
-      )
-
-      setLists(
-        lists.map((list) => {
-          if (idx !== list.idx) return list
-          return {
-            ...list,
-            listItems: [...listItemsFiltered],
-          }
-        })
-      )
+      dispatch({
+        type: 'CLEAR_COMPLETED_LIST_ITEMS',
+        payload: { idx, listItems },
+      })
       return
     }
     setIsModalOpened(true)
   }
 
   const toggleListsStateById = (idx) => {
-    setLists(
-      lists.map((list) => {
-        if (idx !== list.idx) return { ...list, isListOpened: false }
-        return {
-          ...list,
-          isListOpened: !list.isListOpened,
-        }
-      })
-    )
+    dispatch({
+      type: 'TOGGLE_LISTS',
+      payload: { idx },
+    })
   }
 
   return (
@@ -72,11 +58,10 @@ export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
       </div>
       {isModalOpened && (
         <Modal
+          dispatch={dispatch}
           idx={idx}
           listTitle={listTitle}
           listItems={listItems}
-          lists={lists}
-          setLists={setLists}
           setIsModalOpened={setIsModalOpened}
           setIsDontAskCheckbox={setIsDontAskCheckbox}
           isDontAskCheckbox={isDontAskCheckbox}

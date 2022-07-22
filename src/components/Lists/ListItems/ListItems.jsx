@@ -11,26 +11,13 @@ export const ListItems = ({
   idxListItem,
   idxList,
 }) => {
-  const { lists, setLists } = useContext(Context)
+  const { dispatch } = useContext(Context)
 
   const toggleListItemStateById = (idxListItem) => {
-    const listsItemsNew = listItems.map((listItem) => {
-      if (idxListItem !== listItem.idx) return listItem
-      return {
-        ...listItem,
-        isListItemCompleted: !listItem.isListItemCompleted,
-      }
+    dispatch({
+      type: 'TOGGLE_LIST_ITEMS',
+      payload: { idxList, idxListItem, listItems },
     })
-
-    setLists(
-      lists.map((list) => {
-        if (idxList !== list.idx) return list
-        return {
-          ...list,
-          listItems: [...listsItemsNew],
-        }
-      })
-    )
   }
 
   return (

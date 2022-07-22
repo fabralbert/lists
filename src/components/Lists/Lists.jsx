@@ -12,7 +12,7 @@ export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
   const [toggleInputToAddListItems, setToggleInputToAddListItems] =
     useState(false)
 
-  const handleInput = (e) => {
+  const handleInput = () => {
     setToggleInputToAddListItems(!toggleInputToAddListItems)
   }
   return (

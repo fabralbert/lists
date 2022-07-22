@@ -16,25 +16,13 @@ export const ListItemsForm = ({
     inputToAddListItemRef.current.select()
   }, [])
 
-  const { lists, setLists } = useContext(Context)
+  const { dispatch } = useContext(Context)
 
   const addListItem = (idx) => {
-    setLists(
-      lists.map((list) => {
-        if (idx !== list.idx) return list
-        return {
-          ...list,
-          listItems: [
-            {
-              listItemInputText,
-              idx: uuid(),
-              isListItemCompleted: false,
-            },
-            ...listItems,
-          ],
-        }
-      })
-    )
+    dispatch({
+      type: 'ADD_LIST_ITEMS',
+      payload: { idx, listItemInputText, listItems },
+    })
   }
 
   const handleSubmitListItem = (e, idx) => {

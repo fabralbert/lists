@@ -1,21 +1,22 @@
-import { useState } from 'react'
+import { useState, useReducer } from 'react'
 
 import { Lists } from './components/Lists'
 import { ListsForm } from './components/ListsForm'
 import { Context } from './context'
+import { listReducer } from './reducer'
 import './Main.scss'
 
 function Main() {
-  const [lists, setLists] = useState([])
   const [listTitle, setListTitle] = useState('')
+  const [lists, dispatch] = useReducer(listReducer, [])
 
   return (
     <Context.Provider
       value={{
         lists,
-        setLists,
         listTitle,
         setListTitle,
+        dispatch,
       }}
     >
       <div className='main'>

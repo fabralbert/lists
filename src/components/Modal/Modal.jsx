@@ -8,26 +8,17 @@ export const Modal = ({
   listTitle,
   isDontAskCheckbox,
   setIsDontAskCheckbox,
-  lists,
-  setLists,
+  dispatch,
 }) => {
   const clearCompletedListItems = () => {
     if (isDontAskCheckbox) {
       localStorage.setItem('dontAsk', 1)
     }
-    const listItemsFiltered = listItems.filter(
-      (listItem) => !listItem.isListItemCompleted
-    )
 
-    setLists(
-      lists.map((list) => {
-        if (idx !== list.idx) return list
-        return {
-          ...list,
-          listItems: [...listItemsFiltered],
-        }
-      })
-    )
+    dispatch({
+      type: 'CLEAR_COMPLETED_LIST_ITEMS',
+      payload: { idx, listItems },
+    })
     setIsModalOpened(false)
   }
 
@@ -39,7 +30,7 @@ export const Modal = ({
     setIsModalOpened(false)
   }
 
-  const closeModal = (e) => {
+  const closeModal = () => {
     setIsModalOpened(false)
   }
 
