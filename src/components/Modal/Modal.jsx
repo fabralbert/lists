@@ -25,6 +25,7 @@ const ModalInner = styled.div`
 `
 
 const ModalTitle = styled.div`
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
@@ -80,6 +81,7 @@ const ModalFooterBtnDecline = styled.button`
   border: none;
   font-weight: 600;
   font-size: 18px;
+  font-family: inherit;
   color: #fff;
   cursor: pointer;
 `
@@ -91,6 +93,7 @@ const ModalFooterBtnAccept = styled.button`
   border: none;
   font-weight: 600;
   font-size: 18px;
+  font-family: inherit;
   color: #fff;
   cursor: pointer;
 `

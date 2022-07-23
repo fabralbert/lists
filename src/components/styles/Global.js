@@ -1,18 +1,16 @@
 import { createGlobalStyle } from 'styled-components'
 
+import Montserrat from '../../fonts/Montserrat-SemiBold.ttf'
+
 export const GlobalStyles = createGlobalStyle`
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
+@font-face {
+  font-family: 'Montserrat';
+  src: url(${Montserrat}) format('ttf'),
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
 
   *,
   *::after,

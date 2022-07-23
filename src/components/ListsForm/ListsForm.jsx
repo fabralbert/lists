@@ -29,6 +29,7 @@ const ListsFormInput = styled.input`
 const ListsFormButton = styled.button`
   font-size: 16px;
   font-weight: 600;
+  font-family: inherit;
   position: absolute;
   right: 16px;
   top: 16px;

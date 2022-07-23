@@ -44,10 +44,12 @@ const ListHeaderButtonClean = styled.button`
   right: 64px;
   font-weight: 600;
   font-size: 16px;
+  font-family: inherit;
   color: #fff;
   border: none;
   background-color: #ff6a55;
   cursor: pointer;
+
   ${(props) =>
     props.toggleList &&
     `
@@ -62,10 +64,12 @@ const ListHeaderButtonDelete = styled.button`
   right: 16px;
   font-weight: 600;
   font-size: 16px;
+  font-family: inherit;
   color: #fff;
   border: none;
   background-color: #ff6a55;
   cursor: pointer;
+
   ${(props) =>
     props.toggleList &&
     `
