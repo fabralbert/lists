@@ -1,10 +1,60 @@
 import React from 'react'
 import { useContext, useState } from 'react'
 import Cookies from 'universal-cookie'
+import styled from 'styled-components'
 
-import { Context } from '../../../context'
+import { Context } from '../../../context/context'
 import { Modal } from '../../Modal'
-import './ListTitle.scss'
+
+const ListHeader = styled.div`
+  position: relative;
+`
+const ListHeaderTitle = styled.h2`
+  margin: 0;
+  margin-top: 14px;
+  background-color: #ff6a55;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 16px;
+  color: #ffffff;
+  max-width: 100%;
+  word-wrap: break-word;
+  ${(props) =>
+    props.toggleList &&
+    `
+    background-color: #fff;
+    color: #000000;
+    `}
+`
+
+const ListsCount = styled.span`
+  color: rgba(255, 255, 255, 0.8);
+  ${(props) =>
+    props.toggleList &&
+    `
+    color: rgba(0, 0, 0, 0.4);
+    `}
+`
+
+const ListHeaderButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  background-color: #ff6a55;
+  cursor: pointer;
+  ${(props) =>
+    props.toggleList &&
+    `
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.2);
+    `}
+`
 
 export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
   const { dispatch } = useContext(Context)
@@ -34,31 +84,18 @@ export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
 
   return (
     <>
-      <div className='list-header'>
-        <h2
-          className={`list-header__title ${
-            toggleList ? '' : 'list-header__title_hidden'
-          }`}
+      <ListHeader>
+        <ListHeaderTitle
+          toggleList={toggleList}
           onClick={() => toggleListsStateById(idx)}
         >
           {`${listTitle} `}
-          <span
-            className={`lists__count${
-              toggleList ? '' : ' lists__count_hidden'
-            }`}
-          >
-            {listItems.length}
-          </span>
-        </h2>
-        <button
-          className={`list-header__button ${
-            toggleList ? '' : 'list-header__button_hidden'
-          }`}
-          onClick={openModal}
-        >
+          <ListsCount toggleList={toggleList}>{listItems.length}</ListsCount>
+        </ListHeaderTitle>
+        <ListHeaderButton toggleList={toggleList} onClick={openModal}>
           Clean
-        </button>
-      </div>
+        </ListHeaderButton>
+      </ListHeader>
       {isModalOpened && (
         <Modal
           dispatch={dispatch}

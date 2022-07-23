@@ -1,11 +1,26 @@
 import { useState, useReducer, useEffect } from 'react'
+import styled from 'styled-components'
 
 import { Lists } from './components/Lists'
 import { ListsForm } from './components/ListsForm'
-import { Context } from './context'
-import { listReducer } from './reducer'
+import { Context } from './context/context'
+import { listReducer } from './reducer/reducer'
 
-import './Main.scss'
+import { Container } from './components/styles/Container.styled'
+
+import { GlobalStyles } from './components/styles/Global'
+
+// styled-components
+const StyledMain = styled.div`
+  background-color: #fef6f4;
+  min-height: 100vh;
+  font-size: 28px;
+`
+
+const Header = styled.h1`
+  margin: 0;
+  font-size: 28px;
+`
 
 function Main() {
   const [listTitle, setListTitle] = useState('')
@@ -27,9 +42,10 @@ function Main() {
         dispatch,
       }}
     >
-      <div className='main'>
-        <div className='container'>
-          <h1 className='title'>My lists</h1>
+      <GlobalStyles />
+      <StyledMain>
+        <Container>
+          <Header>My lists</Header>
           <ListsForm />
           {lists.map((item) => (
             <Lists
@@ -40,8 +56,8 @@ function Main() {
               listItems={item.listItems}
             />
           ))}
-        </div>
-      </div>
+        </Container>
+      </StyledMain>
     </Context.Provider>
   )
 }

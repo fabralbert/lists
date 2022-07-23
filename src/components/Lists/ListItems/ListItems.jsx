@@ -1,8 +1,60 @@
 import React from 'react'
 import { useContext } from 'react'
+import styled from 'styled-components'
 
-import { Context } from '../../../context'
-import './ListItems.scss'
+import { Context } from '../../../context/context'
+import checkmark from '../../../img/checkmark.svg'
+
+const ListItem = styled.div`
+  padding: 0 0 16px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+`
+
+const ListItemLabel = styled.label`
+  line-height: 20px;
+  padding-left: 10px;
+  display: block;
+  width: 85%;
+  word-wrap: break-word;
+  ${(props) =>
+    props.isListItemCompleted &&
+    `
+    text-decoration: line-through;
+    color: #cdc6c6;
+`}
+`
+
+const CheckboxStyled = styled.span`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 0.3px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  margin-left: -26px;
+`
+
+const Checkbox = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  padding: 26px;
+  &:checked + ${CheckboxStyled}::before {
+    position: absolute;
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: url(${checkmark}) center no-repeat;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`
 
 export const ListItems = ({
   isListItemCompleted,
@@ -22,24 +74,21 @@ export const ListItems = ({
 
   return (
     <>
-      <div className='list-item'>
-        <label
-          className={`list-item__label${
-            isListItemCompleted ? ' list-item__disabled' : ''
-          }`}
+      <ListItem>
+        <ListItemLabel
+          isListItemCompleted={isListItemCompleted}
           htmlFor={`check${idxListItem}`}
         >
-          <input
-            className='checkbox'
+          <Checkbox
             type='checkbox'
             id={`check${idxListItem}`}
             onChange={() => toggleListItemStateById(idxListItem)}
             defaultChecked={isListItemCompleted}
           />
-          <span className='checkbox-styled'></span>
+          <CheckboxStyled></CheckboxStyled>
           {listItemInputText}
-        </label>
-      </div>
+        </ListItemLabel>
+      </ListItem>
     </>
   )
 }

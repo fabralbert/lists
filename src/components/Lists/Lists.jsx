@@ -1,9 +1,38 @@
 import { useState, useRef } from 'react'
+import styled from 'styled-components'
 
 import { ListTitle } from './ListTitle'
 import { ListItemsForm } from './ListItemsForm/ListItemsForm'
 import { ListItems } from './ListItems/ListItems'
-import './Lists.scss'
+
+const ListsBox = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+`
+
+const ListsInner = styled.div`
+  padding: 0 16px;
+`
+
+const ListsButton = styled.input`
+  text-align-last: left;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 16px;
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  outline: none;
+`
+
+const ListItemsBox = styled.div`
+  position: relative;
+  line-height: 0;
+`
 
 export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
   const [listItemInputText, setlistItemInputText] = useState('')
@@ -17,7 +46,7 @@ export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
   }
   return (
     <>
-      <div className='lists'>
+      <ListsBox>
         <ListTitle
           listTitle={listTitle}
           idx={idx}
@@ -25,14 +54,13 @@ export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
           listItems={listItems}
         />
         {isListOpened && (
-          <div className='lists__inner'>
-            <input
-              className='list__button'
+          <ListsInner>
+            <ListsButton
               type='submit'
               value='+ List item'
               onClick={handleInput}
             />
-            <div className='list-items'>
+            <ListItemsBox>
               {toggleInputToAddListItems && (
                 <ListItemsForm
                   listItemInputText={listItemInputText}
@@ -52,10 +80,10 @@ export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
                   listItems={listItems}
                 />
               ))}
-            </div>
-          </div>
+            </ListItemsBox>
+          </ListsInner>
         )}
-      </div>
+      </ListsBox>
     </>
   )
 }
