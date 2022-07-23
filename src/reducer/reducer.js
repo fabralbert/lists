@@ -14,6 +14,10 @@ export const listReducer = (state, action) => {
       ]
     }
 
+    case 'DELETE_LIST': {
+      return state.filter((list) => list.idx !== action.payload.idx)
+    }
+
     case 'TOGGLE_LISTS':
       return state.map((list) => {
         if (action.payload.idx !== list.idx) {

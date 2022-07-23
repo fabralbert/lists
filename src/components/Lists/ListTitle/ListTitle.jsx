@@ -38,7 +38,25 @@ const ListsCount = styled.span`
     `}
 `
 
-const ListHeaderButton = styled.button`
+const ListHeaderButtonClean = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 64px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  background-color: #ff6a55;
+  cursor: pointer;
+  ${(props) =>
+    props.toggleList &&
+    `
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.2);
+    `}
+`
+
+const ListHeaderButtonDelete = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
@@ -53,6 +71,20 @@ const ListHeaderButton = styled.button`
     `
     background-color: #fff;
     color: rgba(0, 0, 0, 0.2);
+    `}
+`
+const VelticalLine = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 51px;
+  width: 2px;
+  height: 20px;
+  background-color: #fff;
+  z-index: 10;
+  ${(props) =>
+    props.toggleList &&
+    `
+    background-color: rgba(0, 0, 0, 0.2);
     `}
 `
 
@@ -82,6 +114,13 @@ export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
     })
   }
 
+  const deleteList = (idx) => {
+    dispatch({
+      type: 'DELETE_LIST',
+      payload: { idx },
+    })
+  }
+
   return (
     <>
       <ListHeader>
@@ -92,9 +131,16 @@ export const ListTitle = ({ idx, toggleList, listTitle, listItems }) => {
           {`${listTitle} `}
           <ListsCount toggleList={toggleList}>{listItems.length}</ListsCount>
         </ListHeaderTitle>
-        <ListHeaderButton toggleList={toggleList} onClick={openModal}>
+        <ListHeaderButtonClean toggleList={toggleList} onClick={openModal}>
           Clean
-        </ListHeaderButton>
+        </ListHeaderButtonClean>
+        <VelticalLine toggleList={toggleList}></VelticalLine>
+        <ListHeaderButtonDelete
+          toggleList={toggleList}
+          onClick={() => deleteList(idx)}
+        >
+          Del
+        </ListHeaderButtonDelete>
       </ListHeader>
       {isModalOpened && (
         <Modal
