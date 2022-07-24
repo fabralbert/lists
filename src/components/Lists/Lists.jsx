@@ -1,38 +1,10 @@
 import { useState, useRef } from 'react'
-import styled from 'styled-components'
 
 import { ListTitle } from './ListTitle'
 import { ListItemsForm } from './ListItemsForm/ListItemsForm'
 import { ListItems } from './ListItems/ListItems'
 
-const ListsBox = styled.div`
-  background-color: #fff;
-  border-radius: 8px;
-`
-
-const ListsInner = styled.div`
-  padding: 0 16px;
-`
-
-const ListsButton = styled.input`
-  text-align-last: left;
-  width: 100%;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 0;
-  margin-bottom: 16px;
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.2);
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-  outline: none;
-`
-
-const ListItemsBox = styled.div`
-  position: relative;
-  line-height: 0;
-`
+import { ListsBox, ListsInner, ListsButton, ListItemsBox } from './styles.js'
 
 export const Lists = ({ listTitle, idx, isListOpened, listItems }) => {
   const [listItemInputText, setlistItemInputText] = useState('')

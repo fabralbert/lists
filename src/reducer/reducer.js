@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 
-export const listReducer = (state, action) => {
+export const listReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_LISTS': {
       return [
